@@ -48,7 +48,6 @@ export async function signInWithGoogle() {
     if (error) throw error;
     return data;
   } else {
-    // Demo fallback for Google sign-in
     return { mock: true, message: "Supabase Google sign in triggered (Demo Mode)" };
   }
 }
