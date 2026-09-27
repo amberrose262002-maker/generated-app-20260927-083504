@@ -928,3 +928,18 @@ export class App extends DurableObject {
     return this.app.fetch(request);
   }
 }
+
+export interface Env {
+  APP_DO?: DurableObjectNamespace<App>;
+}
+
+export default {
+  async fetch(request: Request, env: Env): Promise<Response> {
+    if (env && env.APP_DO) {
+      const id = env.APP_DO.idFromName("default");
+      const stub = env.APP_DO.get(id);
+      return stub.fetch(request);
+    }
+    return new Response("TaskFlow Worker Running", { status: 200 });
+  }
+};
